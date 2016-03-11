@@ -1,8 +1,13 @@
 version: "2"
 
+volumes:
+  gems:
+    driver: local
+
 services:
   web:
     image: ruby:2.3.0
     volumes:
       - .:/usr/src/my_app
+      - gems:/usr/local/bundle
     working_dir: /usr/src/my_app
