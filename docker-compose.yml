@@ -17,14 +17,18 @@ services:
       POSTGRES_PASSWORD: secret123
   web:
     image: ruby:2.3.0
-    command: rails server -b 0.0.0.0
+    command: rails server -b 0.0.0.0 -P /tmp/server.pid
     ports:
       - 3000:3000
     volumes:
       - .:/usr/src/my_app
       - gems:/usr/local/bundle
     working_dir: /usr/src/my_app
+    tty: true
+    stdin_open: true
     links:
       - db
     environment:
       DATABASE_URL: postgres://postgres:secret123@db:5432/my_app_development
+    env_file:
+      - development.env
